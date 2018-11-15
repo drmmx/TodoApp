@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Todo App</string>
-    <string name="todo_list_title">Add Todo</string>
-    <string name="todo_description">Todo Description</string>
-    <string name="todo_name">Todo Name</string>
+    <string name="add_title">Add Task</string>
+    <string name="edit_title">Edit Task</string>
+    <string name="todo_description">Task Description</string>
+    <string name="todo_name">Task Name</string>
     <string name="save">Save</string>
+    <string name="completed_tasks">Completed Tasks</string>
+    <string name="remove_task">Remove Task</string>
 </resources>

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.drmmx.devmax.todoapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.addtodo.AddTodoActivity" />
+        <activity android:name=".ui.addtodo.AddTodoActivity"
+            android:parentActivityName=".ui.todo.TodoActivity"/>
+        <activity android:name=".ui.complete.CompleteActivity"
+            android:parentActivityName=".ui.todo.TodoActivity"
+            android:label="@string/completed_tasks"/>
     </application>
 
 </manifest>

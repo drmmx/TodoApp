@@ -29,10 +29,10 @@ dependencies {
 
     //Backendless
     implementation group: 'com.backendless', name: 'backendless', version: '5.0.2'
-    implementation ( group: 'io.socket', name: 'socket.io-client', version: '1.0.0' ) {
+    implementation(group: 'io.socket', name: 'socket.io-client', version: '1.0.0') {
         exclude group: 'org.json', module: 'json'
     }
-    implementation ('io.socket:socket.io-client:1.0.0') {
+    implementation('io.socket:socket.io-client:1.0.0') {
         exclude group: 'org.json', module: 'json'
     }
 }

@@ -29,7 +29,7 @@ public class TodoPresenter implements TodoContract.Presenter {
     @Override
     public void getAllTodoList() {
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
-        queryBuilder.setWhereClause("checked = 'false'");
+        queryBuilder.setWhereClause("checked = false");
         Backendless.Persistence.of(Todo.class).find(queryBuilder, new AsyncCallback<List<Todo>>() {
             @Override
             public void handleResponse(List<Todo> response) {

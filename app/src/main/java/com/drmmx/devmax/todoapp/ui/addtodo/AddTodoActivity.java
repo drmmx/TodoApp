@@ -27,6 +27,12 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
 
         final String taskId = getIntent().getStringExtra(EDIT_TODO_ID);
 
+        if (taskId == null) {
+            setTitle(R.string.add_title);
+        } else {
+            setTitle(R.string.edit_title);
+        }
+
         mNameTodo = findViewById(R.id.nameEditText);
         mDescriptionTodo = findViewById(R.id.descriptionEditText);
         MaterialButton saveButton = findViewById(R.id.saveButton);
