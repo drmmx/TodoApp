@@ -15,5 +15,7 @@ public interface AddTodoContract {
 
         void saveTodo(Todo todo);
 
+        void updateTodo(Todo todo);
+
     }
 }

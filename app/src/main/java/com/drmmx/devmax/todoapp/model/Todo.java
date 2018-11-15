@@ -9,12 +9,6 @@ public class Todo {
     @MapToProperty( property = "checked" )
     private boolean checked = false;
 
-    public Todo(String name, String description, boolean checked) {
-        this.name = name;
-        this.description = description;
-        this.checked = checked;
-    }
-
     public Todo() {
     }
 

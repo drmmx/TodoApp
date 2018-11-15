@@ -26,7 +26,6 @@ public class AddTodoPresenter implements AddTodoContract.Presenter {
         Backendless.Persistence.of(Todo.class).save(todo, new AsyncCallback<Todo>() {
             @Override
             public void handleResponse(Todo response) {
-
             }
 
             @Override
@@ -34,43 +33,44 @@ public class AddTodoPresenter implements AddTodoContract.Presenter {
                 Log.d(TAG, fault.getMessage());
             }
         });
+    }
 
-/*                new AsyncCallback<Map>() {
+    @Override
+    public void updateTodo(final Todo todo) {
+        Backendless.Persistence.of(Todo.class).save(todo, new AsyncCallback<Todo>() {
             @Override
-            public void handleResponse(Map response) {
-                if (mTodoId != null) {
-                    response.put("name", String.valueOf(todo.getName()));
-                    response.put("description", String.valueOf(todo.getDescription()));
-                    Backendless.Persistence.save(response, new AsyncCallback<Todo>() {
-                        @Override
-                        public void handleResponse(Todo response) {
+            public void handleResponse(Todo response) {
+                response.setName(todo.getName());
+                response.setDescription(todo.getDescription());
+                response.setObjectId(todo.getObjectId());
+                Backendless.Persistence.save(response, new AsyncCallback<Todo>() {
+                    @Override
+                    public void handleResponse(Todo response) {
+                    }
 
-                        }
-
-                        @Override
-                        public void handleFault(BackendlessFault fault) {
-
-                        }
-                    });
-                }
+                    @Override
+                    public void handleFault(BackendlessFault fault) {
+                        Log.d(TAG, fault.getMessage());
+                    }
+                });
             }
+
             @Override
             public void handleFault(BackendlessFault fault) {
                 Log.d(TAG, fault.getMessage());
             }
-        });*/
+        });
     }
 
     @Override
     public void start() {
         if (mTodoId != null) {
-            Backendless.Data.of(Todo.class).findById(mTodoId, new AsyncCallback<Todo>() {
+            Backendless.Persistence.of(Todo.class).findById(mTodoId, new AsyncCallback<Todo>() {
                 @Override
                 public void handleResponse(Todo response) {
-                    Todo todo = new Todo();
-                    todo.setName(String.valueOf(response.getName()));
-                    todo.setDescription(String.valueOf(response.getDescription()));
-                    mView.enterValues(todo);
+                    response.setName(String.valueOf(response.getName()));
+                    response.setDescription(String.valueOf(response.getDescription()));
+                    mView.enterValues(response);
                 }
 
                 @Override
@@ -79,7 +79,7 @@ public class AddTodoPresenter implements AddTodoContract.Presenter {
                 }
             });
         } else {
-            Todo todo = new Todo("", "", false);
+            Todo todo = new Todo();
             mView.enterValues(todo);
         }
     }

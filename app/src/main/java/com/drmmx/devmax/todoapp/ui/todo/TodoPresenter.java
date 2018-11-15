@@ -13,11 +13,11 @@ import java.util.List;
 
 public class TodoPresenter implements TodoContract.Presenter {
 
-    public static final String TAG = "TodoPresenter";
+    private static final String TAG = "TodoPresenter";
 
     private final TodoContract.View mView;
 
-    public TodoPresenter(@NonNull TodoContract.View view) {
+    TodoPresenter(@NonNull TodoContract.View view) {
         mView = view;
     }
 
@@ -30,7 +30,7 @@ public class TodoPresenter implements TodoContract.Presenter {
     public void getAllTodoList() {
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setWhereClause("checked = 'false'");
-        Backendless.Data.of(Todo.class).find(queryBuilder, new AsyncCallback<List<Todo>>() {
+        Backendless.Persistence.of(Todo.class).find(queryBuilder, new AsyncCallback<List<Todo>>() {
             @Override
             public void handleResponse(List<Todo> response) {
                 mView.setData(response);
@@ -57,6 +57,7 @@ public class TodoPresenter implements TodoContract.Presenter {
                     Log.d(TAG, fault.getMessage());
                 }
             });
+            mView.setToast("Completed");
         }
     }
 }

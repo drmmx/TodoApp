@@ -15,7 +15,6 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
 
     private TextInputEditText mNameTodo;
     private TextInputEditText mDescriptionTodo;
-    private MaterialButton mSaveButton;
 
     private Todo mTodo;
 
@@ -26,20 +25,24 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_todo);
 
-        String taskId = getIntent().getStringExtra(EDIT_TODO_ID);
+        final String taskId = getIntent().getStringExtra(EDIT_TODO_ID);
 
         mNameTodo = findViewById(R.id.nameEditText);
         mDescriptionTodo = findViewById(R.id.descriptionEditText);
-        mSaveButton = findViewById(R.id.saveButton);
+        MaterialButton saveButton = findViewById(R.id.saveButton);
 
         mPresenter = new AddTodoPresenter(taskId, this);
 
-        mSaveButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Todo todo = new Todo(String.valueOf(mNameTodo.getText()),
-                        String.valueOf(mDescriptionTodo.getText()), false);
-                mPresenter.saveTodo(todo);
+                mTodo.setName(String.valueOf(mNameTodo.getText()));
+                mTodo.setDescription(String.valueOf(mDescriptionTodo.getText()));
+                if (taskId == null) {
+                    mPresenter.saveTodo(mTodo);
+                } else {
+                    mPresenter.updateTodo(mTodo);
+                }
                 finish();
             }
         });
