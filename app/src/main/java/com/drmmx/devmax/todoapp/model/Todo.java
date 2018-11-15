@@ -7,12 +7,12 @@ public class Todo {
     private String name;
     private String description;
     @MapToProperty( property = "checked" )
-    private boolean isChecked = false;
+    private boolean checked = false;
 
-    public Todo(String name, String description, boolean isChecked) {
+    public Todo(String name, String description, boolean checked) {
         this.name = name;
         this.description = description;
-        this.isChecked = isChecked;
+        this.checked = checked;
     }
 
     public Todo() {
@@ -43,10 +43,10 @@ public class Todo {
     }
 
     public boolean isChecked() {
-        return isChecked;
+        return checked;
     }
 
     public void setChecked(boolean checked) {
-        isChecked = checked;
+        this.checked = checked;
     }
 }

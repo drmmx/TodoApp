@@ -8,8 +8,6 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.drmmx.devmax.todoapp.model.Todo;
 
-import java.util.Map;
-
 public class AddTodoPresenter implements AddTodoContract.Presenter {
 
     public static final String TAG = "AddTodoPresenter";
@@ -24,54 +22,54 @@ public class AddTodoPresenter implements AddTodoContract.Presenter {
     }
 
     @Override
-    public void saveTodo(final Map map) {
-        if (mTodoId != null) {
-            Backendless.Data.of("Todo").findById(mTodoId, new AsyncCallback<Map>() {
-                @Override
-                public void handleResponse(Map response) {
-                    response.put("name", String.valueOf(map.get("name")));
-                    response.put("description", String.valueOf(map.get("description")));
-                    Backendless.Persistence.save(response, new AsyncCallback<Map>() {
+    public void saveTodo(final Todo todo) {
+        Backendless.Persistence.of(Todo.class).save(todo, new AsyncCallback<Todo>() {
+            @Override
+            public void handleResponse(Todo response) {
+
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                Log.d(TAG, fault.getMessage());
+            }
+        });
+
+/*                new AsyncCallback<Map>() {
+            @Override
+            public void handleResponse(Map response) {
+                if (mTodoId != null) {
+                    response.put("name", String.valueOf(todo.getName()));
+                    response.put("description", String.valueOf(todo.getDescription()));
+                    Backendless.Persistence.save(response, new AsyncCallback<Todo>() {
                         @Override
-                        public void handleResponse(Map response) {
-                            Log.d(TAG, "handleResponse: Todo updated");
+                        public void handleResponse(Todo response) {
+
                         }
 
                         @Override
                         public void handleFault(BackendlessFault fault) {
-                            Log.d(TAG, fault.getMessage());
+
                         }
                     });
                 }
-
-                @Override
-                public void handleFault(BackendlessFault fault) {
-                    Log.d(TAG, fault.getMessage());
-                }
-            });
-        } else {
-            Backendless.Data.of("Todo").save(map, new AsyncCallback<Map>() {
-                @Override
-                public void handleResponse(Map response) {
-                    Log.d(TAG, "handleResponse: New Todo saved");
-                }
-                @Override
-                public void handleFault(BackendlessFault fault) {
-                    Log.d(TAG, fault.getMessage());
-                }
-            });
-        }
+            }
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                Log.d(TAG, fault.getMessage());
+            }
+        });*/
     }
 
     @Override
     public void start() {
         if (mTodoId != null) {
-            Backendless.Data.of("Todo").findById(mTodoId, new AsyncCallback<Map>() {
+            Backendless.Data.of(Todo.class).findById(mTodoId, new AsyncCallback<Todo>() {
                 @Override
-                public void handleResponse(Map response) {
+                public void handleResponse(Todo response) {
                     Todo todo = new Todo();
-                    todo.setName(String.valueOf(response.get("name")));
-                    todo.setDescription(String.valueOf(response.get("description")));
+                    todo.setName(String.valueOf(response.getName()));
+                    todo.setDescription(String.valueOf(response.getDescription()));
                     mView.enterValues(todo);
                 }
 

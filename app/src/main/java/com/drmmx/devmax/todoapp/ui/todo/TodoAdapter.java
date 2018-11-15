@@ -6,21 +6,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.drmmx.devmax.todoapp.R;
+import com.drmmx.devmax.todoapp.model.Todo;
 
 import java.util.List;
-import java.util.Map;
 
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     private TodoContract.View mView;
-    private List<Map> mTodoList;
+    private List<Todo> mTodoList;
     private TodoContract.Presenter mPresenter;
 
     public TodoAdapter(TodoContract.View view,
-                       List<Map> todoList,
+                       List<Todo> todoList,
                        TodoContract.Presenter presenter) {
         mView = view;
         mTodoList = todoList;
@@ -38,18 +39,21 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        holder.nameTodoText.setText(String.valueOf(mTodoList.get(position).get("name")));
-        holder.descriptionTodoText.setText(String.valueOf(mTodoList.get(position).get("description")));
+        holder.nameTodoText.setText(String.valueOf(mTodoList.get(position).getName()));
+        holder.descriptionTodoText.setText(String.valueOf(mTodoList.get(position).getDescription()));
 
-        if (!holder.checkBox.isChecked()) {
-            mPresenter.checkTodo(mTodoList.get(position));
-        }
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mPresenter.checkTodo(mTodoList.get(position), isChecked);
+            }
+        });
 
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mView.startAddTodo(String.valueOf(mTodoList.get(holder.getAdapterPosition()).get("objectId")));
+                mView.startAddTodo(String.valueOf(mTodoList.get(holder.getAdapterPosition()).getObjectId()));
             }
         });
     }

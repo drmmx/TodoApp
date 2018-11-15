@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.drmmx.devmax.todoapp.R;
+import com.drmmx.devmax.todoapp.model.Todo;
 import com.drmmx.devmax.todoapp.ui.addtodo.AddTodoActivity;
 import com.drmmx.devmax.todoapp.util.Settings;
 
 import java.util.List;
-import java.util.Map;
 
 public class TodoActivity extends AppCompatActivity implements TodoContract.View {
 
@@ -57,7 +58,7 @@ public class TodoActivity extends AppCompatActivity implements TodoContract.View
     }
 
     @Override
-    public void setData(List<Map> todoList) {
+    public void setData(List<Todo> todoList) {
         TodoAdapter adapter = new TodoAdapter(this, todoList, mPresenter);
         adapter.notifyDataSetChanged();
         mRecyclerView.setHasFixedSize(true);
@@ -70,5 +71,16 @@ public class TodoActivity extends AppCompatActivity implements TodoContract.View
         Intent intent = new Intent(this, AddTodoActivity.class);
         intent.putExtra(AddTodoActivity.EDIT_TODO_ID, String.valueOf(id));
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
+    public void setToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

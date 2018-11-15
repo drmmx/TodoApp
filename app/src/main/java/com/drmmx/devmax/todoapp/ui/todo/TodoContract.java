@@ -2,17 +2,19 @@ package com.drmmx.devmax.todoapp.ui.todo;
 
 import com.drmmx.devmax.todoapp.base.AppBasePresenter;
 import com.drmmx.devmax.todoapp.base.AppBaseView;
+import com.drmmx.devmax.todoapp.model.Todo;
 
 import java.util.List;
-import java.util.Map;
 
 public interface TodoContract {
 
     interface View extends AppBaseView<Presenter> {
 
-        void setData(List<Map> todoList);
+        void setData(List<Todo> todoList);
 
         void startAddTodo(String id);
+
+        void setToast(String message);
 
     }
 
@@ -20,6 +22,6 @@ public interface TodoContract {
 
         void getAllTodoList();
 
-        void checkTodo(Map response);
+        void checkTodo(Todo todo, boolean isChecked);
     }
 }

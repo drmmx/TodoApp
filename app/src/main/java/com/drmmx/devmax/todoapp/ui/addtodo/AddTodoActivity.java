@@ -9,9 +9,6 @@ import android.view.View;
 import com.drmmx.devmax.todoapp.R;
 import com.drmmx.devmax.todoapp.model.Todo;
 
-import java.util.HashMap;
-
-
 public class AddTodoActivity extends AppCompatActivity implements AddTodoContract.View {
 
     public static final String EDIT_TODO_ID = "EDIT_TODO_ID";
@@ -40,10 +37,8 @@ public class AddTodoActivity extends AppCompatActivity implements AddTodoContrac
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HashMap<String, Object> todo = new HashMap<>();
-                todo.put("name", String.valueOf(mNameTodo.getText()));
-                todo.put("description", String.valueOf(mDescriptionTodo.getText()));
-                todo.put("checked", false);
+                Todo todo = new Todo(String.valueOf(mNameTodo.getText()),
+                        String.valueOf(mDescriptionTodo.getText()), false);
                 mPresenter.saveTodo(todo);
                 finish();
             }
