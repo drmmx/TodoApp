@@ -2,7 +2,6 @@ package com.drmmx.devmax.todoapp.ui.todo;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,6 +75,12 @@ public class TodoActivity extends AppCompatActivity implements TodoContract.View
     protected void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter = null;
     }
 
     @Override
